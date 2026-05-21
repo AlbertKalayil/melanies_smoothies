@@ -22,29 +22,6 @@ my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT
 # st.dataframe(data=my_dataframe, use_container_width=True)
 
 
-#----------------------------------------------------------------------------------------------------------------
-# Step 1: Add column
-session.sql("""
-ALTER TABLE FRUIT_OPTIONS
-ADD COLUMN SEARCH_ON STRING
-""").collect()
-
-# Step 2: Custom values
-session.sql("""
-UPDATE FRUIT_OPTIONS
-SET SEARCH_ON = 'apple fruit'
-WHERE FRUIT_NAME = 'Apple'
-""").collect()
-
-# Step 3: Default remaining rows
-session.sql("""
-UPDATE FRUIT_OPTIONS
-SET SEARCH_ON = FRUIT_NAME
-WHERE SEARCH_ON IS NULL
-""").collect()
-#-----------------------------------------------------------------------------------------------------------------
-
-
 ingredients_list = st.multiselect(
     'Choose up to 5 ingredients:'
     , my_dataframe
